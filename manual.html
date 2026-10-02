@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>新手使用手冊</title>
+  <style>
+    :root {
+      --primary: #d72638;
+      --primary-half: rgba(215, 38, 56, 0.5);
+      --green: #18c98b;
+      --green-half: rgba(24, 201, 139, 0.5);
+      --yellow: #f2b705;
+      --bg: #f8f8f6;
+      --card: #ffffff;
+      --text: #1f1d1d;
+      --muted: #736e6e;
+      --divider: #e8e6e6;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 16px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC",
+        "Microsoft JhengHei", "Segoe UI", sans-serif;
+    }
+
+    /* 9:16 畫板，內文以畫板寬度等比縮放 */
+    .frame {
+      width: min(100%, calc((100vh - 32px) * 9 / 16), 720px);
+      min-width: 300px;
+      container-type: inline-size;
+    }
+
+    .poster {
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      background: var(--bg);
+      border: 1px solid var(--divider);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 4.8cqw 4.8cqw 4cqw;
+      gap: 2.56cqw;
+      box-shadow: 0 2px 12px rgba(31, 29, 29, 0.08);
+    }
+
+    header .kicker {
+      margin: 0;
+      color: var(--primary);
+      font-size: 2.4cqw;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+    }
+
+    header h1 {
+      margin: 0.8cqw 0 1.12cqw;
+      font-size: 6.56cqw;
+      line-height: 1.2;
+    }
+
+    header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 2.72cqw;
+      line-height: 1.5;
+    }
+
+    .section-title {
+      margin: 0 0 1.44cqw;
+      font-size: 3.2cqw;
+      font-weight: 700;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--divider);
+      border-radius: 2.4cqw;
+      padding: 2.56cqw 2.88cqw;
+    }
+
+    /* 三步上手 */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.6cqw;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8cqw;
+    }
+
+    .num {
+      width: 5.6cqw;
+      height: 5.6cqw;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--primary);
+      color: #fff;
+      font-size: 2.88cqw;
+      font-weight: 700;
+    }
+
+    .step strong {
+      font-size: 2.8cqw;
+    }
+
+    .step span,
+    .row p,
+    .note {
+      color: var(--muted);
+      font-size: 2.44cqw;
+      line-height: 1.5;
+    }
+
+    /* 看板三欄 */
+    .lanes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.6cqw;
+    }
+
+    .lane {
+      border: 0.48cqw solid var(--c);
+      border-radius: 1.92cqw;
+      padding: 1.6cqw 1.28cqw;
+      text-align: center;
+      background: var(--card);
+    }
+
+    .lane b {
+      display: block;
+      font-size: 2.96cqw;
+    }
+
+    .lane small {
+      color: var(--muted);
+      font-size: 2.32cqw;
+    }
+
+    /* 標籤示意 */
+    .tag {
+      display: inline-block;
+      padding: 0.24cqw 1.76cqw;
+      border: 0.24cqw solid var(--c);
+      border-radius: 99px;
+      font-size: 2.48cqw;
+      font-weight: 700;
+      line-height: 1.6;
+      white-space: nowrap;
+    }
+
+    .tag.high { background: var(--c); color: #fff; }
+    .tag.medium { background: var(--h); border-color: transparent; color: #fff; }
+    .tag.low { background: #fff; color: var(--c); }
+    .life { --c: var(--primary); --h: var(--primary-half); }
+    .work { --c: var(--green); --h: var(--green-half); }
+
+    .legend {
+      display: grid;
+      grid-template-columns: auto repeat(3, 1fr);
+      gap: 1.28cqw 1.6cqw;
+      align-items: center;
+      justify-items: center;
+      font-size: 2.56cqw;
+    }
+
+    .legend .head {
+      color: var(--muted);
+      font-size: 2.32cqw;
+    }
+
+    .legend .label {
+      justify-self: start;
+      font-weight: 700;
+    }
+
+    /* 操作列表 */
+    .rows {
+      display: grid;
+      gap: 1.76cqw;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 14.4cqw 1fr;
+      gap: 1.92cqw;
+      align-items: center;
+    }
+
+    .row .act {
+      padding: 0.96cqw 0;
+      border-radius: 1.6cqw;
+      background: var(--bg);
+      text-align: center;
+      font-size: 2.48cqw;
+      font-weight: 700;
+    }
+
+    .row p {
+      margin: 0;
+    }
+
+    .row p b {
+      color: var(--text);
+    }
+
+    footer {
+      padding-top: 2.08cqw;
+      border-top: 1px solid var(--divider);
+    }
+
+    .note {
+      margin: 0;
+    }
+
+    .note b {
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+  <main class="poster" aria-label="我的待辦清單新手使用手冊">
+    <header>
+      <p class="kicker">新手使用手冊</p>
+      <h1>我的待辦清單</h1>
+      <p>用一個看板管理工作與生活：寫下任務，再把它從 To-do 推到 done。</p>
+    </header>
+
+    <section>
+      <h2 class="section-title">三步上手</h2>
+      <div class="steps">
+        <div class="card step">
+          <div class="num">1</div>
+          <strong>寫名稱</strong>
+          <span>在「任務名稱」輸入要做的事</span>
+        </div>
+        <div class="card step">
+          <div class="num">2</div>
+          <strong>選分類與優先</strong>
+          <span>工作／生活；高／中／低，預設中</span>
+        </div>
+        <div class="card step">
+          <div class="num">3</div>
+          <strong>按新增</strong>
+          <span>或直接按 Enter，任務會進 To-do</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">看懂看板：紅綠燈</h2>
+      <div class="lanes">
+        <div class="lane" style="--c: var(--primary)"><b>To-do</b><small>尚未開始</small></div>
+        <div class="lane" style="--c: var(--yellow)"><b>process</b><small>進行中</small></div>
+        <div class="lane" style="--c: var(--green)"><b>done</b><small>已完成</small></div>
+      </div>
+      <p class="note" style="margin-top: 1.28cqw">卡片放進某一欄時，該欄框線會亮燈 3 秒。</p>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">看懂標籤：顏色＝分類，填色＝優先</h2>
+      <div class="legend">
+        <span></span>
+        <span class="head">高</span>
+        <span class="head">中</span>
+        <span class="head">低</span>
+        <span class="label">工作</span>
+        <span class="tag work high">工作</span>
+        <span class="tag work medium">工作</span>
+        <span class="tag work low">工作</span>
+        <span class="label">生活</span>
+        <span class="tag life high">生活</span>
+        <span class="tag life medium">生活</span>
+        <span class="tag life low">生活</span>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">怎麼改任務</h2>
+      <div class="rows">
+        <div class="row">
+          <span class="act">點標籤</span>
+          <p>優先程度依 <b>高 → 中 → 低</b> 循環切換</p>
+        </div>
+        <div class="row">
+          <span class="act">點名稱</span>
+          <p>跳出小選單，可一起改 <b>分類、優先、進度</b>，按確認才套用</p>
+        </div>
+        <div class="row">
+          <span class="act">拖曳</span>
+          <p>桌機把卡片拖到其他欄，<b>只改變進度</b></p>
+        </div>
+        <div class="row">
+          <span class="act">排序</span>
+          <p>各欄自動依 <b>高 → 中 → 低</b>，同級較早建立的在前</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p class="note">畫面上的示範任務可直接操作。<b>目前尚未儲存：重新整理會回到初始示範資料。</b></p>
+    </footer>
+  </main>
+  </div>
+</body>
+</html>

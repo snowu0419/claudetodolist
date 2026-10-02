@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>我的待辦清單</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <div class="title-row">
+        <h1 id="app-title">我的待辦清單</h1>
+        <a class="manual-link" href="manual.html" target="_blank" rel="noopener">手冊↗︎</a>
+      </div>
+      <p id="app-intro" class="intro">把工作與生活的大小事記下來，一件一件完成。</p>
+    </header>
+
+    <section class="card" aria-labelledby="add-heading">
+      <h2 id="add-heading" class="card-title">新增任務</h2>
+      <form id="task-form" class="task-form" novalidate>
+        <div class="field field-name">
+          <label for="task-name">任務名稱</label>
+          <input id="task-name" name="name" type="text" autocomplete="off"
+                 placeholder="例如：整理本週會議紀錄" aria-describedby="form-message">
+        </div>
+        <div class="field field-category">
+          <label for="task-category">分類</label>
+          <select id="task-category" name="category"></select>
+        </div>
+        <div class="field field-priority">
+          <label for="task-priority">優先</label>
+          <select id="task-priority" name="priority"></select>
+        </div>
+        <button type="submit" class="btn-primary">新增任務</button>
+      </form>
+      <p id="form-message" class="form-message" aria-live="polite"></p>
+    </section>
+
+    <section class="board-wrap" aria-labelledby="board-heading">
+      <div class="list-header">
+        <h2 id="board-heading" class="card-title">任務看板（<span id="task-count">0</span>）</h2>
+        <p id="demo-notice" class="demo-notice" hidden>內含示範任務，可直接操作</p>
+      </div>
+      <p id="sort-note" class="sort-note">各欄依優先程度（高→中→低）自動排序，同級依建立時間。點任務名稱可修改分類、優先與進度；拖曳只改變進度。</p>
+      <div class="board">
+        <section class="card column" data-status="todo" aria-labelledby="col-todo-title">
+          <h3 id="col-todo-title" class="column-title"><span class="column-name"></span>（<span class="column-count">0</span>）</h3>
+          <ol class="task-list"></ol>
+          <p class="empty-state" hidden>這一欄目前沒有任務</p>
+        </section>
+        <section class="card column" data-status="doing" aria-labelledby="col-doing-title">
+          <h3 id="col-doing-title" class="column-title"><span class="column-name"></span>（<span class="column-count">0</span>）</h3>
+          <ol class="task-list"></ol>
+          <p class="empty-state" hidden>這一欄目前沒有任務</p>
+        </section>
+        <section class="card column" data-status="done" aria-labelledby="col-done-title">
+          <h3 id="col-done-title" class="column-title"><span class="column-name"></span>（<span class="column-count">0</span>）</h3>
+          <ol class="task-list"></ol>
+          <p class="empty-state" hidden>這一欄目前沒有任務</p>
+        </section>
+      </div>
+      <p id="announcer" class="visually-hidden" aria-live="polite"></p>
+    </section>
+
+    <dialog id="task-dialog" class="task-dialog" aria-labelledby="dialog-title">
+      <form id="dialog-form" method="dialog" class="dialog-form">
+        <h3 id="dialog-title" class="dialog-title"></h3>
+        <div class="field">
+          <label for="dialog-category">分類</label>
+          <select id="dialog-category"></select>
+        </div>
+        <div class="field">
+          <label for="dialog-priority">優先</label>
+          <select id="dialog-priority"></select>
+        </div>
+        <div class="field">
+          <label for="dialog-status">進度</label>
+          <select id="dialog-status"></select>
+        </div>
+        <div class="dialog-actions">
+          <button type="submit" value="cancel" class="btn-secondary">取消</button>
+          <button type="submit" value="confirm" class="btn-primary">確認</button>
+        </div>
+      </form>
+    </dialog>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
